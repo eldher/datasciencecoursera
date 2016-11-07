@@ -1,4 +1,4 @@
-```R
+
 set.seed(13435)
   x <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
   x <- x[sample(1:5),]
@@ -116,4 +116,4 @@ set.seed(13435)
   
   restData2 = mutate(restData,zipGroups = cut2(zipCode,g=4))
   table(restData2$zipGroups)
-  ```
+
