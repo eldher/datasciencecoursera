@@ -117,3 +117,45 @@ set.seed(13435)
   restData2 = mutate(restData,zipGroups = cut2(zipCode,g=4))
   table(restData2$zipGroups)
 
+# Reshaping data --------------
+
+library(reshape2)
+data(mtcars)
+head(mtcars)
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(
+    data = mtcars,
+    id = c("carname","gear","cyl"),
+    measure.vars = c("mpg","hp")
+)
+head(carMelt)
+
+tail(carMelt)
+
+cylData <- dcast(
+    data = carMelt,
+    cyl ~ variable
+)
+
+cylData <- dcast(
+    data = carMelt,
+    cyl ~ variable,
+    mean
+)
+cylData
+
+head(InsectSprays)
+tapply(InsectSprays$count,InsectSprays$spray,sum)
+
+spIns = split(InsectSprays$count,InsectSprays$spray)
+sprC = lapply(spIns, sum)
+sprC = unlist(sprC)
+
+sapply(spIns, sum)
+
+library(plyr)
+ddply(InsectSprays,.(spray),summarise,sum=sum(count))
+
+spraySums <- ddply(InsectSprays,.(spray),summarize,sum=ave(count,FUN=sum))
+
+
