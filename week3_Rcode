@@ -159,3 +159,12 @@ ddply(InsectSprays,.(spray),summarise,sum=sum(count))
 spraySums <- ddply(InsectSprays,.(spray),summarize,sum=ave(count,FUN=sum))
 
 
+
+# Using dply
+i <- match("city",names(chicago))
+j <- match("dtpt",names(chicago))
+
+head(chicago[,-(i:j)])
+
+chicago <- mutate(chicago, tempcat = factor(1*(tmpd > 80 ), labels = c("cold","hot")))
+hotcold <- group_by(chicago,tempcat)
