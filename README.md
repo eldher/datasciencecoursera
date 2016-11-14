@@ -79,9 +79,10 @@ join_ms <- select(join_ms,subject,activity_desc,everything())  # reorder columns
 ```
 
 ## Aggregation by subject and activities.
-Finally, grouping by subject and activity description and calculating means for each variable using _dyplr_, we get a smaller output, meeting condition [5].
+Finally, grouping by subject and activity description and calculating means for each variable using _dyplr_, we get a smaller output, meeting condition [5]. Writes output as .txt file.
 ```R
 join_tidy <- join_ms %>% group_by(subject,activity_desc) %>% summarise_all(funs(mean))
+write.table(join_tidy,"har_tidy.txt",row.names = F)
 ```
 
 ## Is it tidy?
