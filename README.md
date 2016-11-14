@@ -131,4 +131,4 @@ dbook$axis[grep("_Y",dbook$var)] <- "Y"
 dbook$axis[grep("_Z",dbook$var)] <- "Z"
 write.table(dbook,"code_book.txt",row.names = F)
 ```
-*QED*
+
