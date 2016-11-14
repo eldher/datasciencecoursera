@@ -1,7 +1,4 @@
-# Final Project 
-# Eldher Hernandez
-# 2016-11-13
-
+# code for UCI HAR
 library(data.table)
 library(dplyr)
 
