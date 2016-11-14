@@ -2,7 +2,7 @@
 
 First, clear the workspace and load needed packages, set working dir. Downloaded and unzipped in folder, replace with your own.
 
-'''R
+```R
 rm( list = ls(all = T))
 
 library(data.table)
@@ -10,11 +10,11 @@ library(dplyr)
 
 working_dir= "C:/0501/@coursera/data science JHU/getting_data/data/UCI HAR Dataset"
 setwd(working_dir)
-'''
+```
 
 The first step, was renaming all variables, replacing paranthesis and commas "()", "," with underscores. The variables with "bandsEnergy" the comma character was replaced with the string "_to_"
 
-'''R
+```R
 feat <- read.delim("features.txt",sep=" ", header = F, stringsAsFactors = F,
                    col.names = c("n","var"))[2]
 
@@ -25,13 +25,13 @@ feat$var <- gsub(",","_",feat$var)
 feat$var <- gsub("-","_",feat$var)
 feat$var <- gsub("\\(","_args_",feat$var)
 feat$var <- gsub("\\)","",feat$var)
-'''
+```
 
 ## Loading training and testing data sets.
 
 Coded a function to load both data sets. Using _fread_ instead of _read.delim_ resulted in lower loading time and automatic column recognition. The function works well taking advantage of folder/files names.
 
-'''R
+```R
 LoadData <- function(tdata){
 
     dt <- fread(paste0(tdata,"/X_",tdata,".txt"),sep=" ", header = F)
@@ -41,33 +41,33 @@ LoadData <- function(tdata){
     dt$activity <- fread(paste0(tdata,"/y_",tdata,".txt"))
     return(dt)
 }
-'''
+```
 
 Now, simply load the two sets and join them
-'''R
+```R
 train <- LoadData("train")
 test <- LoadData("test")
 join <- rbind(train,test)
-'''
+```
 As stated, we will only need variables on the mean and standard deviation, so, I filtered column names, but was having some troubles. Find this solution to avoid duplicate names. Also, not forget the subject and activity variables.
 
-'''R
+```R
 valid_column_names <- make.names(names=names(join), unique=TRUE, allow_ = TRUE)
 names(join) <- valid_column_names
 
 join_ms <- select(join,matches("mean|std|subject|activity"))
-'''
+```
 
 Now, we add activity description using the labels, and drop the encoded column.
 
-'''R
+```R
 activity_labels <- fread("activity_labels.txt",sep = " ", header = F, col.names = c("activity","activity_desc"))
 join_ms <- left_join(join_ms,activity_labels)
 join_ms$activity <- NULL
 join_ms <- select(join_ms,subject,activity_desc,everything())  # reorder columns
-'''
+```
 
 Finally, calculate means by each variable, grouped by subject and activity description, using dyplr. Write tidy output.
-'''R
+```R
 join_tidy <- join_ms %>% group_by(subject,activity_desc) %>% summarise_all(funs(mean))
-'''
+```
