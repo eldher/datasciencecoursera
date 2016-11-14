@@ -21,9 +21,10 @@ library(dplyr)
 working_dir= "C:/0501/@coursera/data science JHU/getting_data/data/UCI HAR Dataset"
 setwd(working_dir)
 ```
+## Loading features names
 
-The first step was to load the 561 features names, replacing paranthesis "()" and commas "," with underscores "_"
-The variables with "bandsEnergy" the comma character was replaced with the string "_to_"
+First step was to load the 561 features names, replacing paranthesis "()" and commas "," with underscores `_`.
+In variables with "bandsEnergy", the comma character was replaced with the string `_to_`. Names are almost self explanatory so there is no need to do anything else. With this, we make sure to meet condition [4]
 
 ```R
 feat <- read.delim("features.txt",sep=" ", header = F, stringsAsFactors = F,
@@ -40,7 +41,7 @@ feat$var <- gsub("\\)","",feat$var)
 
 ## Loading training and testing data sets.
 
-Coded a function to load both data sets. Using _fread_ instead of _read.delim_ resulted in lower loading time and automatic column recognition. The function works well taking advantage of folder/files names.
+Using _fread_ instead of _read.delim_ resulted in lower loading time and automatic column recognition. I coded a function to take advantage of folder/files names.
 
 ```R
 LoadData <- function(tdata){
@@ -54,13 +55,13 @@ LoadData <- function(tdata){
 }
 ```
 
-Now, simply load the two sets and join them
+Now, load the two sets and joins them. This meets condition [1] 
 ```R
 train <- LoadData("train")
 test <- LoadData("test")
 join <- rbind(train,test)
 ```
-As stated, we will only need variables on the mean and standard deviation, so, I filtered column names, but was having some troubles. Find this solution to avoid duplicate names. Also, not forget the subject and activity variables.
+As stated, we will only need variables on the mean and standard deviation, so filtering the column names reduces the table to only 180 variables. This meets condition [2]. I had some issues with _dplyr::select()_, and found a solution to avoid duplicate colnames. 
 
 ```R
 valid_column_names <- make.names(names=names(join), unique=TRUE, allow_ = TRUE)
@@ -69,7 +70,7 @@ names(join) <- valid_column_names
 join_ms <- select(join,matches("mean|std|subject|activity"))
 ```
 
-Now, we add activity description using the labels, and drop the encoded column.
+Now, we add activity description using labels, and drop the encoded column. So [3] is done.
 
 ```R
 activity_labels <- fread("activity_labels.txt",sep = " ", header = F, col.names = c("activity","activity_desc"))
@@ -78,7 +79,7 @@ join_ms$activity <- NULL
 join_ms <- select(join_ms,subject,activity_desc,everything())  # reorder columns
 ```
 
-Finally, calculate means by each variable, grouped by subject and activity description, using dyplr. Write tidy output.
+Finally, grouping by subject and activity description and calculating means by each variable using _dyplr_, we can write a tidy output. This meets condition [5].
 ```R
 join_tidy <- join_ms %>% group_by(subject,activity_desc) %>% summarise_all(funs(mean))
 ```
