@@ -1,5 +1,6 @@
 
 # Code book for UCI HAR 
+Every numerical variable is the result from taking the column mean for each. Grouped by subject and activity.
 
 |       var                                      |    aggr                     |    domain              |    component                 |    element    |    axis       |
 |------------------------------------------------|-----------------------------|------------------------|------------------------------|---------------|---------------|
