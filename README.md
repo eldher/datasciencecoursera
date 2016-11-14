@@ -1,6 +1,6 @@
 # Getting and Cleaning Data Course Project
 
-In this project, we will obtain, clean, merge and summarize data. The original dataset, and detailed description is available at [Human Activity Recognition Using Smartphones](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones). I'll try to keep things as simple as possible, following instructions given:
+This project is about how I obtained, cleaned, mergeed and summarized the [Human Activity Recognition Using Smartphones Dataset](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones). A detailed problem description is available at UCI site. I'll try to keep things as simple as possible, following instructions from the project statement, we need a R script that:
 
 1. Merges the training and the test sets to create one data set.
 2. Extracts only the measurements on the mean and standard deviation for each measurement.
@@ -8,7 +8,16 @@ In this project, we will obtain, clean, merge and summarize data. The original d
 4. Appropriately labels the data set with descriptive variable names.
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-First download the dataset, unzip it, and place this code in the same folder, clear the workspace and load needed packages, set working directory.
+This will be peer-reviewed project. This repo contains these files:
+
+1. _run_analysis.R_: the main script to load, clean, summarize and output a tidy dataset from Human Activity Recognition.
+2. _code_book.R_: is the script to get the Code Book for variable names in the final tidy dataset.
+3. _har_tidy.txt_: final tiydy dataset for Human Activity Recognition
+4. _code_book.txt_: code book with detailed info for each variable.
+
+To run the script, first download the dataset, unzip it, and place _run_analysis.R_ in the same folder. Packages *data.table* and *dplyr* are required. From now on, I will be giving the details of each step in the script. 
+
+First, clear the workspace and load the required packages and set the working directory.
 
 ```R
 rm( list = ls(all = T))
@@ -21,8 +30,8 @@ setwd(working_dir)
 ```
 ## Loading features names
 
-First step was to load the 561 features names, replacing paranthesis "()" and commas "," with underscores `_`.
-In variables with "bandsEnergy", the comma character was replaced with the string `_to_`. Names are almost self explanatory so there is no need to do anything else. With this, we make sure to meet condition [4]
+Here we load the 561 features names, replacing paranthesis "()" and commas "," with underscores `_`.
+For the variables with "bandsEnergy", I did something different: the comma character was replaced with the string `_to_`. This is step is no needed, but it is useful for practice. Variable names are almost self explanatory so there is no need to do anything else. We make sure this meets condition [4]
 
 ```R
 feat <- read.delim("features.txt",sep=" ", header = F, stringsAsFactors = F,
@@ -92,6 +101,7 @@ Any question or improvement will be considered.
 
 ## Appendix: Code book
 This code will generate a data table with details of the variables in the final tidy dataset. Must be run after run_analysis.R with all data in the workspace.
+*Note:* each variable is the *column mean* for every subject and activity pair. 
 
 ```R
 # code book
@@ -121,4 +131,4 @@ dbook$axis[grep("_Y",dbook$var)] <- "Y"
 dbook$axis[grep("_Z",dbook$var)] <- "Z"
 write.table(dbook,"code_book.txt",row.names = F)
 ```
-
+*QED*
