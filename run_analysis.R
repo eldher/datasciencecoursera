@@ -30,9 +30,8 @@ train <- LoadData("train")
 test <- LoadData("test")
 join <- rbind(train,test)
 
-# cleans colum names to avoid problems with dplyr select()
-valid_column_names <- make.names(names=names(join), unique=TRUE, allow_ = TRUE)
-names(join) <- valid_column_names
+# cleans column names to avoid problems with dplyr select()
+valid_column_names <- make.names(names=names(join), unique=TRUE, allow_ = TRUE); names(join) <- valid_column_names
 
 join_ms <- select(join,matches("mean|std|subject|activity"))
 activity_labels <- fread("activity_labels.txt",sep = " ", header = F, col.names = c("activity","activity_desc"))
