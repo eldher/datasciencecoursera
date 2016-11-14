@@ -1,5 +1,15 @@
 # Readme for Final Peer Review Project
 
+The code for Peer-graded Assignment: *Getting and Cleaning Data Course Project*
+
+I tried to keep things as simple as possible, following instructions given. So this code does:
+
+1. Merges the training and the test sets to create one data set.
+2. Extracts only the measurements on the mean and standard deviation for each measurement.
+3. Uses descriptive activity names to name the activities in the data set
+4. Appropriately labels the data set with descriptive variable names.
+5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
 First, clear the workspace and load needed packages, set working dir. Downloaded and unzipped in folder, replace with your own.
 
 ```R
@@ -12,7 +22,8 @@ working_dir= "C:/0501/@coursera/data science JHU/getting_data/data/UCI HAR Datas
 setwd(working_dir)
 ```
 
-The first step, was renaming all variables, replacing paranthesis and commas "()", "," with underscores. The variables with "bandsEnergy" the comma character was replaced with the string "_to_"
+The first step was to load the 561 features names, replacing paranthesis "()" and commas "," with underscores "_"
+The variables with "bandsEnergy" the comma character was replaced with the string "_to_"
 
 ```R
 feat <- read.delim("features.txt",sep=" ", header = F, stringsAsFactors = F,
