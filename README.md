@@ -90,11 +90,11 @@ Yes. This dataset didn't need reshaping, because each variable came in its colum
 
 Any question or improvement will be considered.
 
-## Appendix: Data book
-This code will generate a data table with details for variable names in the final tidy dataset. Must be run after run_analysis.R with all data in the workspace.
+## Appendix: Code book
+This code will generate a data table with details of the variables in the final tidy dataset. Must be run after run_analysis.R with all data in the workspace.
 
 ```R
-# data book
+# code book
 dbook <- as.data.table( names(join_tidy))
 dbook <- rename(dbook,var = V1)
 dbook$aggr <- "" 
@@ -112,12 +112,13 @@ dbook$component[grep("Gyro_",dbook$var)] <- "Angular Acceleration "
 dbook$component[grep("GyroJerk_",dbook$var)] <- "Angular Jerk "
 dbook$component[grep("GyroMag_",dbook$var)] <- "Angular Magnitude "
 dbook$component[grep("GyroJerkMag_",dbook$var)] <- "Angular Jerk Magnitude "
-dbook$agent <- ""
-dbook$agent[grep("Body",dbook$var)] <- "Body "
-dbook$agent[grep("Gravity",dbook$var)] <- "Gravity "
+dbook$element <- ""
+dbook$element[grep("Body",dbook$var)] <- "Body "
+dbook$element[grep("Gravity",dbook$var)] <- "Gravity "
 dbook$axis <- ""
 dbook$axis[grep("_X",dbook$var)] <- "X"
 dbook$axis[grep("_Y",dbook$var)] <- "Y"
 dbook$axis[grep("_Z",dbook$var)] <- "Z"
+write.table(dbook,"code_book.txt",row.names = F)
 ```
 
