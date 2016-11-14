@@ -1,8 +1,6 @@
-# Readme for Final Peer Review Project
+# Getting and Cleaning Data Course Project
 
-The code for Peer-graded Assignment: *Getting and Cleaning Data Course Project*
-
-I tried to keep things as simple as possible, following instructions given. So this code does:
+In this project, we will obtain, clean, merge and summarize data. The original dataset, and detailed description is available at [Human Activity Recognition Using Smartphones](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones). I'll try to keep things as simple as possible, following instructions given:
 
 1. Merges the training and the test sets to create one data set.
 2. Extracts only the measurements on the mean and standard deviation for each measurement.
@@ -10,7 +8,7 @@ I tried to keep things as simple as possible, following instructions given. So t
 4. Appropriately labels the data set with descriptive variable names.
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-First, clear the workspace and load needed packages, set working dir. Downloaded and unzipped in folder, replace with your own.
+First download the dataset, unzip it, and place this code in the same folder, clear the workspace and load needed packages, set working directory.
 
 ```R
 rm( list = ls(all = T))
