@@ -69,8 +69,9 @@ names(join) <- valid_column_names
 
 join_ms <- select(join,matches("mean|std|subject|activity"))
 ```
+## Adding activity descriptions from labels.
 
-Now, we add activity description using labels, and drop the encoded column. So [3] is done.
+Now, we add activity description using the file _activity_labels.txt_, and drop the encoded column. So [3] is done.
 
 ```R
 activity_labels <- fread("activity_labels.txt",sep = " ", header = F, col.names = c("activity","activity_desc"))
@@ -79,7 +80,13 @@ join_ms$activity <- NULL
 join_ms <- select(join_ms,subject,activity_desc,everything())  # reorder columns
 ```
 
-Finally, grouping by subject and activity description and calculating means by each variable using _dyplr_, we can write a tidy output. This meets condition [5].
+## Aggregation by subject and activities.
+Finally, grouping by subject and activity description and calculating means for each variable using _dyplr_, we get a smaller output, meeting condition [5].
 ```R
 join_tidy <- join_ms %>% group_by(subject,activity_desc) %>% summarise_all(funs(mean))
 ```
+
+## Is it tidy?
+Yes. This dataset didn't need reshaping, because each variable came in its column. Also, contains one observation (subject,activity,mean(~allmeasures)) by row, and each cell contains only one datum.
+
+Any question or improvement will be considered.
